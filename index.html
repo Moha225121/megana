@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>Megana Restaurant | 3D Experience</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        :root {
+            --megana-red: #e41d27;
+            --megana-yellow: #ffd300;
+            --megana-black: #000000;
+            --megana-dark: #050509;
+            --card-bg: #11111a;
+            --text-light: #f7f7f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #18192b 0%, #050509 45%, #000000 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .page {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        header h1 span.m {
+            color: var(--megana-red);
+        }
+
+        header h1 span.megana {
+            color: var(--megana-yellow);
+        }
+
+        header p {
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .logo-circle {
+            width: 110px;
+            height: 110px;
+            margin: 20px auto 0;
+            border-radius: 50%;
+            border: 4px solid var(--megana-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, var(--megana-yellow) 55%, var(--megana-red) 90%);
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        .logo-circle span {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        /* 3D Carousel */
+        .carousel-wrapper {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .scene {
+            width: min(100%, 900px);
+            height: 380px;
+            perspective: 1200px;
+        }
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .card3d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: clamp(230px, 30vw, 280px);
+            height: 320px;
+            transform-style: preserve-3d;
+            padding: 20px 22px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, #19192a, #090912);
+            box-shadow:
+                0 25px 40px rgba(0,0,0,0.65),
+                0 0 0 1px rgba(255,255,255,0.03);
+            color: var(--text-light);
+        }
+
+        .card3d::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(
+                    135deg,
+                    rgba(255,211,0,0.22),
+                    rgba(228,29,39,0.4)
+            );
+            opacity: 0.35;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        .card-inner {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--megana-yellow);
+        }
+
+        .card-title {
+            margin-top: 18px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .card-text {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        .card-footer {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .card-badge {
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .card-cta {
+            padding: 7px 16px;
+            border-radius: 999px;
+            background: var(--megana-red);
+            border: none;
+            color: #fff;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+
+        .card-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(228,29,39,0.5);
+            background: #ff3944;
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .ctrl-btn {
+            cursor: pointer;
+            padding: 7px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            font-size: 0.85rem;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-1px);
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+        }
+
+        .dot.active {
+            background: var(--megana-yellow);
+            box-shadow: 0 0 8px rgba(255,211,0,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .scene {
+                height: 340px;
+            }
+
+            .card3d {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <h1>
+            <span class="m">M</span>
+            <span class="megana">egana</span>
+            <span style="font-weight:300;">Restaurant</span>
+        </h1>
+        <p>تجربة عرض ثلاثية الأبعاد لأشهى أطباق مطعم ميجانا</p>
+
+        <!-- دائرة تمثّل اللوقو (يمكنك استبدالها بصورة حقيقية لاحقاً) -->
+        <div class="logo-circle">
+            <span>M</span>
+        </div>
+    </header>
+
+    <section class="carousel-wrapper">
+        <div class="scene">
+            <div class="carousel" id="carousel">
+                <!-- الكرت 1 -->
+                <article class="card3d">
+                    <div class="card-inner">
+                        <div>
+                            <div class="card-tag">Signature</div>
+                            <h2 class="card-title">ساندويتش ميجانا الخاص</h2>
+                            <p class="card-text">
+                                تشكيلة مختارة من اللحم أو الدجاج مع صوص ميجانا السري،
+                                خضار طازجة وخبز محمّص يقدم ساخناً طوال اليوم.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-badge">الأكثر طلباً</span>
+                            <button class="card-cta">اطلب الآن</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- الكرت 2 -->
+                <article class="card3d">
+                    <div class="card-inner">
+                        <div>
+                            <div class="card-tag">Grill</div>
+                            <h2 class="card-title">مشاوي على الطريقة الليبية</h2>
+                            <p class="card-text">
+                                مشكل مشاوي من كباب، شيش طاووق وريش، متبلة بتوابل
+                                خاصة ومشوية على الجمر، مع أطباق جانبية وسلطات.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-badge">وجبات عائلية</span>
+                            <button class="card-cta">احجز طاولة</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- الكرت 3 -->
+                <article class="card3d">
+                    <div class="card-inner">
+                        <div>
+                            <div class="card-tag">Pizza</div>
+                            <h2 class="card-title">بيتزا ميجانا</h2>
+                            <p class="card-text">
+                                بيتزا بصلصة مميّزة، جبن موزاريلا ذائب، وتشكيلة من
+                                الإضافات المتنوعة لتناسب جميع الأذواق.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-badge">حجم عائلي متوفر</span>
+                            <button class="card-cta">استعرض المنيو</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- الكرت 4 -->
+                <article class="card3d">
+                    <div class="card-inner">
+                        <div>
+                            <div class="card-tag">Branches</div>
+                            <h2 class="card-title">فروع ميجانا</h2>
+                            <p class="card-text">
+                                الحدائق – شارع فينيسيا – قاريونس. اختر الفرع الأقرب لك
+                                وتمتع بخدمة سريعة وطعام طازج.
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-badge">قريب منك</span>
+                            <button class="card-cta">اتصل بنا</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="carousel-controls">
+            <button class="ctrl-btn" id="prevBtn">السابق</button>
+            <div style="display:flex; gap:6px;">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <button class="ctrl-btn" id="nextBtn">التالي</button>
+        </div>
+    </section>
+</div>
+
+<script>
+    const carousel = document.getElementById("carousel");
+    const cards = Array.from(document.querySelectorAll(".card3d"));
+    const dots = Array.from(document.querySelectorAll(".dot"));
+    const total = cards.length;
+    let currentIndex = 0;
+    const radius = 360 / total;
+
+    function updateCarousel() {
+        const angle = currentIndex * -radius;
+
+        carousel.style.transform = `translateZ(-420px) rotateY(${angle}deg)`;
+
+        cards.forEach((card, i) => {
+            const cardAngle = i * radius;
+            card.style.transform =
+                `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(420px)`;
+        });
+
+        dots.forEach((d, i) => {
+            d.classList.toggle("active", i === currentIndex);
+        });
+    }
+
+    updateCarousel();
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % total;
+        updateCarousel();
+    });
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + total) % total;
+        updateCarousel();
+    });
+
+    // دوران تلقائي
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % total;
+        updateCarousel();
+    }, 5000);
+</script>
+</body>
+</html>
