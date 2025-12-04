@@ -9,91 +9,60 @@
         :root {
             --megana-red: #e41d27;
             --megana-yellow: #ffd300;
-            --megana-black: #000000;
-            --megana-dark: #050509;
-            --card-bg: #11111a;
             --text-light: #f7f7f7;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #18192b 0%, #050509 45%, #000000 100%);
+            font-family: sans-serif;
+            background: #08080c;
             color: var(--text-light);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .page {
-            max-width: 1200px;
-            width: 100%;
+            padding: 10px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
-        header h1 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
         }
 
-        header h1 span.m {
-            color: var(--megana-red);
-        }
-
-        header h1 span.megana {
-            color: var(--megana-yellow);
-        }
-
-        header p {
-            margin-top: 10px;
-            opacity: 0.8;
-        }
-
+        /* Logo */
         .logo-circle {
-            width: 110px;
-            height: 110px;
-            margin: 20px auto 0;
+            width: 90px;
+            height: 90px;
+            margin: 15px auto;
             border-radius: 50%;
+            background: radial-gradient(circle, var(--megana-yellow), var(--megana-red));
             border: 4px solid var(--megana-yellow);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, var(--megana-yellow) 55%, var(--megana-red) 90%);
-            box-shadow: 0 0 20px rgba(0,0,0,0.6);
         }
 
         .logo-circle span {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            color: #fff;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
 
-        /* 3D Carousel */
-        .carousel-wrapper {
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 18px;
-        }
-
+        /* 3D Scene */
         .scene {
-            width: min(100%, 900px);
-            height: 380px;
-            perspective: 1200px;
+            width: 100%;
+            height: 340px;
+            perspective: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Smaller screens */
+        @media (max-width: 480px) {
+            .scene {
+                height: 280px;
+                perspective: 700px;
+            }
         }
 
         .carousel {
@@ -101,295 +70,203 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.8s ease-in-out;
+            transition: transform 0.7s ease;
         }
 
         .card3d {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: clamp(230px, 30vw, 280px);
-            height: 320px;
-            transform-style: preserve-3d;
-            padding: 20px 22px;
-            border-radius: 22px;
-            background: linear-gradient(145deg, #19192a, #090912);
-            box-shadow:
-                0 25px 40px rgba(0,0,0,0.65),
-                0 0 0 1px rgba(255,255,255,0.03);
+            width: clamp(180px, 45vw, 260px);
+            height: clamp(230px, 55vw, 320px);
+            background: #11131a;
+            border-radius: 18px;
+            padding: 16px;
             color: var(--text-light);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
 
-        .card3d::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(
-                    135deg,
-                    rgba(255,211,0,0.22),
-                    rgba(228,29,39,0.4)
-            );
-            opacity: 0.35;
-            mix-blend-mode: screen;
-            pointer-events: none;
-        }
-
-        .card-inner {
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--megana-yellow);
+        /* Mobile: reduce brightness & size */
+        @media (max-width: 480px) {
+            .card3d {
+                padding: 12px;
+            }
         }
 
         .card-title {
-            margin-top: 18px;
-            font-size: 1.4rem;
-            font-weight: 700;
+            margin-top: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         .card-text {
-            margin-top: 12px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            opacity: 0.85;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            opacity: 0.9;
+            line-height: 1.5;
         }
 
         .card-footer {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            font-size: 0.85rem;
-        }
-
-        .card-badge {
-            padding: 5px 12px;
-            border-radius: 999px;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid rgba(255,255,255,0.12);
+            font-size: 0.8rem;
         }
 
         .card-cta {
-            padding: 7px 16px;
-            border-radius: 999px;
             background: var(--megana-red);
-            border: none;
+            padding: 7px 12px;
+            border-radius: 12px;
             color: #fff;
-            font-size: 0.85rem;
+            border: none;
             cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
         }
 
-        .card-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(228,29,39,0.5);
-            background: #ff3944;
-        }
-
+        /* Controls */
         .carousel-controls {
+            margin-top: 10px;
             display: flex;
+            justify-content: center;
             gap: 10px;
             align-items: center;
-            font-size: 0.9rem;
-            opacity: 0.9;
         }
 
         .ctrl-btn {
-            cursor: pointer;
-            padding: 7px 16px;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(0,0,0,0.4);
+            padding: 7px 14px;
+            background: #222;
+            border: 1px solid #555;
             color: #fff;
-            font-size: 0.85rem;
-            transition: background 0.15s ease, transform 0.15s ease;
-        }
-
-        .ctrl-btn:hover {
-            background: rgba(255,255,255,0.08);
-            transform: translateY(-1px);
+            border-radius: 12px;
+            cursor: pointer;
         }
 
         .dot {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.35);
+            background: #777;
         }
 
         .dot.active {
             background: var(--megana-yellow);
-            box-shadow: 0 0 8px rgba(255,211,0,0.8);
-        }
-
-        @media (max-width: 768px) {
-            .scene {
-                height: 340px;
-            }
-
-            .card3d {
-                height: 300px;
-            }
         }
     </style>
 </head>
+
 <body>
-<div class="page">
-    <header>
-        <h1>
-            <span class="m">M</span>
-            <span class="megana">egana</span>
-            <span style="font-weight:300;">Restaurant</span>
-        </h1>
-        <p>تجربة عرض ثلاثية الأبعاد لأشهى أطباق مطعم ميجانا</p>
 
-        <!-- دائرة تمثّل اللوقو (يمكنك استبدالها بصورة حقيقية لاحقاً) -->
-        <div class="logo-circle">
-            <span>M</span>
-        </div>
-    </header>
+<header>
+    <h1><span style="color:#e41d27;">M</span><span style="color:#ffd300;">egana</span> Restaurant</h1>
+    <div class="logo-circle"><span>M</span></div>
+</header>
 
-    <section class="carousel-wrapper">
-        <div class="scene">
-            <div class="carousel" id="carousel">
-                <!-- الكرت 1 -->
-                <article class="card3d">
-                    <div class="card-inner">
-                        <div>
-                            <div class="card-tag">Signature</div>
-                            <h2 class="card-title">ساندويتش ميجانا الخاص</h2>
-                            <p class="card-text">
-                                تشكيلة مختارة من اللحم أو الدجاج مع صوص ميجانا السري،
-                                خضار طازجة وخبز محمّص يقدم ساخناً طوال اليوم.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-badge">الأكثر طلباً</span>
-                            <button class="card-cta">اطلب الآن</button>
-                        </div>
-                    </div>
-                </article>
+<div class="scene">
+    <div class="carousel" id="carousel">
 
-                <!-- الكرت 2 -->
-                <article class="card3d">
-                    <div class="card-inner">
-                        <div>
-                            <div class="card-tag">Grill</div>
-                            <h2 class="card-title">مشاوي على الطريقة الليبية</h2>
-                            <p class="card-text">
-                                مشكل مشاوي من كباب، شيش طاووق وريش، متبلة بتوابل
-                                خاصة ومشوية على الجمر، مع أطباق جانبية وسلطات.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-badge">وجبات عائلية</span>
-                            <button class="card-cta">احجز طاولة</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- الكرت 3 -->
-                <article class="card3d">
-                    <div class="card-inner">
-                        <div>
-                            <div class="card-tag">Pizza</div>
-                            <h2 class="card-title">بيتزا ميجانا</h2>
-                            <p class="card-text">
-                                بيتزا بصلصة مميّزة، جبن موزاريلا ذائب، وتشكيلة من
-                                الإضافات المتنوعة لتناسب جميع الأذواق.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-badge">حجم عائلي متوفر</span>
-                            <button class="card-cta">استعرض المنيو</button>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- الكرت 4 -->
-                <article class="card3d">
-                    <div class="card-inner">
-                        <div>
-                            <div class="card-tag">Branches</div>
-                            <h2 class="card-title">فروع ميجانا</h2>
-                            <p class="card-text">
-                                الحدائق – شارع فينيسيا – قاريونس. اختر الفرع الأقرب لك
-                                وتمتع بخدمة سريعة وطعام طازج.
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-badge">قريب منك</span>
-                            <button class="card-cta">اتصل بنا</button>
-                        </div>
-                    </div>
-                </article>
+        <article class="card3d">
+            <h2 class="card-title">ساندويتش ميجانا</h2>
+            <p class="card-text">وصفة خاصة مع صوص ميجانا السري.</p>
+            <div class="card-footer">
+                <span>الأكثر طلباً</span>
+                <button class="card-cta">اطلب الآن</button>
             </div>
-        </div>
+        </article>
 
-        <div class="carousel-controls">
-            <button class="ctrl-btn" id="prevBtn">السابق</button>
-            <div style="display:flex; gap:6px;">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+        <article class="card3d">
+            <h2 class="card-title">مشاوي على الجمر</h2>
+            <p class="card-text">كباب، شيش طاووق وريش.</p>
+            <div class="card-footer">
+                <span>مشويات</span>
+                <button class="card-cta">احجز الآن</button>
             </div>
-            <button class="ctrl-btn" id="nextBtn">التالي</button>
-        </div>
-    </section>
+        </article>
+
+        <article class="card3d">
+            <h2 class="card-title">بيتزا ميجانا</h2>
+            <p class="card-text">جبن موزاريلا وصوص مميز.</p>
+            <div class="card-footer">
+                <span>بيتزا</span>
+                <button class="card-cta">اعرض المنيو</button>
+            </div>
+        </article>
+
+        <article class="card3d">
+            <h2 class="card-title">فروعنا</h2>
+            <p class="card-text">الحدائق – فينيسيا – قاريونس</p>
+            <div class="card-footer">
+                <span>قريب منك</span>
+                <button class="card-cta">اتصل بنا</button>
+            </div>
+        </article>
+
+    </div>
+</div>
+
+<div class="carousel-controls">
+    <button class="ctrl-btn" id="prevBtn">◀</button>
+    <div style="display:flex; gap:4px;">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+    <button class="ctrl-btn" id="nextBtn">▶</button>
 </div>
 
 <script>
     const carousel = document.getElementById("carousel");
-    const cards = Array.from(document.querySelectorAll(".card3d"));
-    const dots = Array.from(document.querySelectorAll(".dot"));
+    const cards = [...document.querySelectorAll(".card3d")];
+    const dots = [...document.querySelectorAll(".dot")];
     const total = cards.length;
-    let currentIndex = 0;
-    const radius = 360 / total;
+    let index = 0;
 
     function updateCarousel() {
-        const angle = currentIndex * -radius;
+        const angle = index * -(360 / total);
+        const z = window.innerWidth < 480 ? 300 : 430; // mobile smaller
 
-        carousel.style.transform = `translateZ(-420px) rotateY(${angle}deg)`;
+        carousel.style.transform = `translateZ(-${z}px) rotateY(${angle}deg)`;
 
         cards.forEach((card, i) => {
-            const cardAngle = i * radius;
+            const step = 360 / total;
             card.style.transform =
-                `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(420px)`;
+                `translate(-50%, -50%) rotateY(${i * step}deg) translateZ(${z}px)`;
         });
 
-        dots.forEach((d, i) => {
-            d.classList.toggle("active", i === currentIndex);
-        });
+        dots.forEach((d, i) => d.classList.toggle("active", i === index));
     }
 
     updateCarousel();
 
-    document.getElementById("nextBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % total;
+    document.getElementById("nextBtn").onclick = () => {
+        index = (index + 1) % total;
         updateCarousel();
+    };
+
+    document.getElementById("prevBtn").onclick = () => {
+        index = (index - 1 + total) % total;
+        updateCarousel();
+    };
+
+    /* Touch Swipe for Phones */
+    let startX = 0;
+
+    carousel.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
     });
 
-    document.getElementById("prevBtn").addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + total) % total;
-        updateCarousel();
+    carousel.addEventListener("touchend", e => {
+        const diff = e.changedTouches[0].clientX - startX;
+
+        if (diff > 40) { index = (index - 1 + total) % total; updateCarousel(); }
+        if (diff < -40) { index = (index + 1) % total; updateCarousel(); }
     });
 
-    // دوران تلقائي
+    /* Auto rotate */
     setInterval(() => {
-        currentIndex = (currentIndex + 1) % total;
+        index = (index + 1) % total;
         updateCarousel();
-    }, 5000);
+    }, 5500);
 </script>
+
 </body>
 </html>
